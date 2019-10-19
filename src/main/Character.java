@@ -25,7 +25,7 @@ public class Character {
     }
 
     public int getHealth() {
-        return health;
+        return health + 90;
     }
 
     public void setHealth(int health) {
