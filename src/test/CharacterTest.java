@@ -21,11 +21,11 @@ public class CharacterTest {
         Character attacker = new Character(AttackType.Fire, 100, 10);
         Character victim = new Character(AttackType.Fire, 100, 10);
 
-        assertEquals(victim.getHealth(), 100);
+        assertEquals(victim.getHealth(), 100,.0001);
 
         attacker.attack(victim);
 
-        assertEquals(victim.getHealth(), 90);
+        assertEquals(victim.getHealth(), 90,.0001);
     }
 
     /**
@@ -42,11 +42,11 @@ public class CharacterTest {
 
         attacker.setModifier(new Modifier(2.0, Stat.Damage));
 
-        assertEquals(victim.getHealth(), 100);
+        assertEquals(victim.getHealth(), 100, .0001);
 
         attacker.attack(victim);
 
-        assertEquals(victim.getHealth(), 80);
+        assertEquals(victim.getHealth(), 80 , .0001);
     }
 
 
