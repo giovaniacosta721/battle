@@ -1,14 +1,24 @@
 package test;
 
-import main.Character;
-import main.Modifier;
+import main.Move;
+import main.Pokemon;
 import main.enums.Stat;
+import main.enums.Type;
+import org.junit.Before;
 import org.junit.Test;
-import main.enums.AttackType;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class CharacterTest {
+public class MoveTest {
+
+    private Move move;
+    private Pokemon victim;
+
+    @Before
+    public void setUp() {
+        move = new Move(Type.Fire, Stat.Damage, 10, 100, 0);
+        victim = new Pokemon(Type.Fire, 100);
+    }
 
     /**
      * Testing baseline attack functionality with no other factors considered.
@@ -18,13 +28,8 @@ public class CharacterTest {
      */
     @Test
     public void testAttack() {
-        Character attacker = new Character(AttackType.Fire, 100, 10);
-        Character victim = new Character(AttackType.Fire, 100, 10);
-
         assertEquals(victim.getHealth(), 100,.0001);
-
-        attacker.attack(victim);
-
+        move.attack(victim);
         assertEquals(victim.getHealth(), 90,.0001);
     }
 
@@ -37,15 +42,8 @@ public class CharacterTest {
      */
     @Test
     public void testDamageBoostedAttack() {
-        Character attacker = new Character(AttackType.Fire, 100, 10);
-        Character victim = new Character(AttackType.Fire, 100, 10);
-
-        attacker.setModifier(new Modifier(2.0, Stat.Damage));
-
         assertEquals(victim.getHealth(), 100, .0001);
-
-        attacker.attack(victim);
-
+        move.attack(victim);
         assertEquals(victim.getHealth(), 80 , .0001);
     }
 

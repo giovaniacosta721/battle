@@ -1,6 +1,6 @@
 package main.enums;
 
-public enum AttackType {
+public enum Type {
 
     Water, Fire, Rock;
 
