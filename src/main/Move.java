@@ -5,13 +5,15 @@ import main.enums.Type;
 
 public class Move {
 
+    private String name;
     private Type type;
     private Stat stat;
     private double value;
     private double accuracy;
     private double critical;
 
-    public Move(Type type, Stat stat, double value, double accuracy, double critical) {
+    public Move(String name, Type type, Stat stat, double value, double accuracy, double critical) {
+        this.name = name;
         this.type = type;
         this.stat = stat;
         this.value = value;
@@ -21,6 +23,14 @@ public class Move {
 
     public void attack(Pokemon pokemon) {
         pokemon.setHealth(pokemon.getHealth() - value);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Type getType() {

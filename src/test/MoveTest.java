@@ -16,8 +16,8 @@ public class MoveTest {
 
     @Before
     public void setUp() {
-        move = new Move(Type.Fire, Stat.Damage, 10, 100, 0);
-        victim = new Pokemon(Type.Fire, 100);
+        move = new Move("A", Type.Fire, Stat.Damage, 10, 100, 0);
+        victim = new Pokemon("A", Type.Fire, 100, 100);
     }
 
     /**
