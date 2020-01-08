@@ -3,15 +3,13 @@ package main;
 import main.enums.Stat;
 import main.enums.Type;
 
-import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Battle {
-
-    Scanner scanner = new Scanner(System.in);
-    Pokemon userPokemon = null;
+    /*Pokemon userPokemon = null;
     Pokemon enemyPokemon = null;
     Pokemon bulbasaur = this.userPokemon = new Pokemon("Bulbasaur", Type.Grass, 150, 50);
     Pokemon charmander = this.userPokemon = new Pokemon("Charmander", Type.Fire, 75, 150);
@@ -33,9 +31,36 @@ public class Battle {
             new Move("Waterfall", Type.Water, Stat.Damage, 10.0, 90.0, 50.0),
             new Move("Surf", Type.Water, Stat.Damage, 70.0, 05.0, 50.0),
             new Move("Bubble", Type.Water, Stat.Damage, 20.0, 50.0, 50.0)
+    );*/
+    Scanner scanner = new Scanner(System.in);
+    Player player1 = new Player("Player 1");
+    Player player2 = new Player("Player 2");
+
+    Pokemon bulbasaur = new Pokemon("Bulbasaur",Type.Grass,150,50,10);
+    Pokemon charmander = new Pokemon("Charmander", Type.Fire, 200,75,5);
+    Pokemon squirtle = new Pokemon("Squirtle", Type.Water,100,20, 20);
+
+
+    List<Action> bulbasaurMoveList = List.of(
+            new Attack("Vine Whip", Stat.Damage,50,Type.Water,50,50),
+            new Attack("Razor Leaf",Stat.Damage, 10, Type.Water,90,50),
+            new Defend("Seed Bomb",Stat.Defense,15),
+            new Recover("Solar Beam", Stat.Recovery,25)
+    );
+    List<Action> charmanderMoveList = List.of(
+            new Attack("Ember", Stat.Damage,50,Type.Water,50,50),
+            new Attack("Flame Thrower",Stat.Damage, 10, Type.Water,90,100),
+            new Defend("Fire Spin",Stat.Defense,15),
+            new Recover("Inferno", Stat.Recovery,25)
+    );
+    List<Action> squirtleMoveList = List.of(
+            new Attack("Water Gun", Stat.Damage,50,Type.Water,50,50),
+            new Attack("Water Fall",Stat.Damage, 10, Type.Water,90,50),
+            new Defend("Surf",Stat.Defense,15),
+            new Recover("Bubble", Stat.Recovery,25)
     );
 
-    boolean playerTurn = true;
+
     Random random = new Random();
 
     public void battle() {
@@ -49,7 +74,7 @@ public class Battle {
 
         createPokemon(input);
 
-        battleBeginSummary(userPokemon, enemyPokemon);
+        battleBeginSummary(player1, player2);
 
         battleLoop();
 
@@ -63,33 +88,40 @@ public class Battle {
      */
 
     private void createPokemon(String input) {
-        while (userPokemon == null || enemyPokemon == null) {
+        while (player1.getCurrentPokemon() == null || player2.getCurrentPokemon() == null) {
             if (input.equals("Bulbasaur")) {
-                userPokemon = bulbasaur;
-                userPokemon.setMoveList(bulbasaurMoveList);
-                enemyPokemon = charmander;
-                enemyPokemon.setMoveList(charmanderMoveList);
+                player1.addPokemon(bulbasaur);
+                player1.setCurrentPokemon(bulbasaur);
+                bulbasaur.setMoveList(bulbasaurMoveList);
+                player2.addPokemon(charmander);
+                player2.setCurrentPokemon(charmander);
+                charmander.setMoveList(charmanderMoveList);
             } else if (input.equals("Charmander")) {
-                userPokemon = charmander;
-                userPokemon.setMoveList(charmanderMoveList);
-                enemyPokemon = squirtle;
-                enemyPokemon.setMoveList(squirtleMoveList);
+                player1.addPokemon(charmander);
+                player1.setCurrentPokemon(charmander);
+                charmander.setMoveList(charmanderMoveList);
+                player2.addPokemon(squirtle);
+                player2.setCurrentPokemon(squirtle);
+                squirtle.setMoveList(squirtleMoveList);
             } else if (input.equals("Squirtle")) {
-                userPokemon = squirtle;
-                userPokemon.setMoveList(squirtleMoveList);
-                enemyPokemon = bulbasaur;
-                enemyPokemon.setMoveList(bulbasaurMoveList);
+                player1.addPokemon(squirtle);
+                player1.setCurrentPokemon(squirtle);
+                squirtle.setMoveList(squirtleMoveList);
+                player2.addPokemon(bulbasaur);
+                player2.setCurrentPokemon(bulbasaur);
+                bulbasaur.setMoveList(bulbasaurMoveList);
             } else {
                 System.out.println("Please re-enter Pokemon name.");
+                input = scanner.nextLine();
             }
         }
     }
 
-    private void battleBeginSummary(Pokemon userPokemon, Pokemon enemyPokemon) {
+    private void battleBeginSummary(Player player, Player player2) {
         System.out.println("Player");
-        System.out.println(userPokemon.toString());
+        System.out.println(player.getCurrentPokemon().toString());
         System.out.println("Enemy");
-        System.out.println(enemyPokemon.toString());
+        System.out.println(player2.getCurrentPokemon().toString());
     }
 
     /**
@@ -98,35 +130,38 @@ public class Battle {
 
     private void battleLoop() {
         String input;
-        Move playerMove;
-        while (userPokemon.getHealth() > 0 && enemyPokemon.getHealth() > 0) {
-            if (playerTurn) {
+        Action playerMove;
+        player1.setTurn(true);
+        while (player1.getCurrentPokemon().getHealth() > 0 && player2.getCurrentPokemon().getHealth() > 0) {
+            if (player1.isTurn()) {
                 System.out.println("Player Turn");
                 System.out.println(
-                        userPokemon.getMoveList().get(0).getName() + ", " +
-                        userPokemon.getMoveList().get(1).getName() + ", " +
-                        userPokemon.getMoveList().get(2).getName() + ", " +
-                        userPokemon.getMoveList().get(3).getName()
+                        player1.getCurrentPokemon().getMoveList().get(0).getName() + ", " +
+                        player1.getCurrentPokemon().getMoveList().get(1).getName() + ", " +
+                        player1.getCurrentPokemon().getMoveList().get(2).getName() + ", " +
+                        player1.getCurrentPokemon().getMoveList().get(3).getName()
                 );
                 input = scanner.nextLine();
-                playerMove = checkMove(input, userPokemon.getMoveList());
+                playerMove = checkMove(input);
                 if (playerMove == null) {
                     System.out.println("Please re-enter the move name.");
                 } else {
-                    playerMove.attack(enemyPokemon);
-                    playerTurn = false;
+                   playerMove.action(player1,player2);
+                   player1.setTurn(false);
+                   display();
                 }
-            } else if (!playerTurn) {
+            } else if (!player1.isTurn()) {
                 System.out.println("Enemy Turn");
-                playerMove = enemyPokemon.getMoveList().get(random.nextInt(4));
-                playerMove.attack(userPokemon);
-                playerTurn = true;
+                playerMove = player2.getCurrentPokemon().getMoveList().get(random.nextInt(4));
+                playerMove.action(player2,player1);
+                player1.setTurn(true);
+                display();
             }
         }
     }
 
-    private Move checkMove(String playerMove, List<Move> moveList) {
-        for (Move move : moveList) {
+    private Action checkMove(String playerMove) {
+        for (Action move : player1.getCurrentPokemon().getMoveList()) {
             if (playerMove.equals(move.getName())) {
                 return move;
             }
@@ -135,11 +170,16 @@ public class Battle {
     }
 
     private void endBattle() {
-        if (userPokemon.getHealth() <= 0) {
+        if (player1.getCurrentPokemon().getHealth() <= 0) {
             System.out.println("Enemy player won!");
-        } else if (enemyPokemon.getHealth() <= 0) {
+        } else if (player2.getCurrentPokemon().getHealth() <= 0) {
             System.out.println("You won!");
         }
     }
 
+    /*Created display for own personal testing to see current health of player 1 pokemon and player 2 pokemon*/
+    public void display(){
+        System.out.println("User Pokemon Health: " + player1.getCurrentPokemon().getHealth());
+        System.out.println("Enemy Pokemon Health: " + player2.getCurrentPokemon().getHealth());
+    }
 }

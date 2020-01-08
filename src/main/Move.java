@@ -2,74 +2,53 @@ package main;
 
 import main.enums.Stat;
 import main.enums.Type;
-
-public class Move {
+/**
+ * Move implements Action and defines default getters and setters for name, stat, and value.
+ * action() will stay as abstract. This method will be used by move sets to actually do the defined move
+ * */
+abstract public class Move implements Action{
 
     private String name;
-    private Type type;
     private Stat stat;
     private double value;
-    private double accuracy;
-    private double critical;
 
-    public Move(String name, Type type, Stat stat, double value, double accuracy, double critical) {
+    public Move(String name, Stat stat, double value) {
         this.name = name;
-        this.type = type;
         this.stat = stat;
         this.value = value;
-        this.accuracy = accuracy;
-        this.critical = critical;
     }
-
-    public void attack(Pokemon pokemon) {
-        pokemon.setHealth(pokemon.getHealth() - value);
-    }
-
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
+    @Override
     public Stat getStat() {
         return stat;
     }
 
+    @Override
     public void setStat(Stat stat) {
         this.stat = stat;
     }
 
+    @Override
     public double getValue() {
         return value;
     }
 
+    @Override
     public void setValue(double value) {
         this.value = value;
     }
 
-    public double getAccuracy() {
-        return accuracy;
-    }
+    @Override
+    abstract public void action(Player player1, Player player2);
 
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
-    }
 
-    public double getCritical() {
-        return critical;
-    }
-
-    public void setCritical(double critical) {
-        this.critical = critical;
-    }
 }

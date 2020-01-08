@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
+/*
 public class MoveTest {
 
     private Move move;
@@ -20,12 +21,14 @@ public class MoveTest {
         victim = new Pokemon("A", Type.Fire, 100, 100);
     }
 
-    /**
+    */
+/**
      * Testing baseline attack functionality with no other factors considered.
      * Attacker Power: 10
      * Initial Victim Health: 100
      * Expected Victim Health: 90
-     */
+     *//*
+
     @Test
     public void testAttack() {
         assertEquals(victim.getHealth(), 100,.0001);
@@ -33,13 +36,15 @@ public class MoveTest {
         assertEquals(victim.getHealth(), 90,.0001);
     }
 
-    /**
+    */
+/**
      * Testing attack functionality with damage modified.
      * Attacker Power: 10
      * Modifier: Damage, 2.0
      * Initial Victim Health:
      * Expected Victim Health: 80
-     */
+     *//*
+
     @Test
     public void testDamageBoostedAttack() {
         assertEquals(victim.getHealth(), 100, .0001);
@@ -50,3 +55,4 @@ public class MoveTest {
 
 
 }
+*/
