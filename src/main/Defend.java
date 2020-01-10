@@ -21,5 +21,9 @@ public class Defend extends Move{
         System.out.printf("%s used %s\n",player1.getCurrentPokemon().getName(),this.getName());
         System.out.printf("%s increased defense by %.2f\n",player1.getCurrentPokemon().getName(), this.getValue());
     }
-
+    @Override
+    public String toString(){
+        return "" + this.getName() + "\n\tDefense: " +
+                this.getValue();
+    }
 }

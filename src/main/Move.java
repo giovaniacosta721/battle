@@ -49,6 +49,11 @@ abstract public class Move implements Action{
 
     @Override
     abstract public void action(Player player1, Player player2);
+    @Override
+    public String toString(){
+        return "" + this.getName() + "\nValue: " +
+                this.getValue();
+    }
 
 
 }
