@@ -3,36 +3,15 @@ package main;
 import main.enums.Stat;
 import main.enums.Type;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Battle {
-    /*Pokemon userPokemon = null;
-    Pokemon enemyPokemon = null;
-    Pokemon bulbasaur = this.userPokemon = new Pokemon("Bulbasaur", Type.Grass, 150, 50);
-    Pokemon charmander = this.userPokemon = new Pokemon("Charmander", Type.Fire, 75, 150);
-    Pokemon squirtle = this.userPokemon = new Pokemon("Squirtle", Type.Water, 100, 75);
-    List<Move> bulbasaurMoveList = List.of(
-            new Move("Vine Whip", Type.Water, Stat.Damage, 50.0, 50.0, 50.0),
-            new Move("Razor Leaf", Type.Water, Stat.Damage, 10.0, 90.0, 50.0),
-            new Move("Seed Bomb", Type.Water, Stat.Damage, 70.0, 05.0, 50.0),
-            new Move("Solar Beam", Type.Water, Stat.Damage, 20.0, 50.0, 50.0)
-            );
-    List<Move> charmanderMoveList = List.of(
-            new Move("Ember", Type.Water, Stat.Damage, 50.0, 50.0, 50.0),
-            new Move("Flamethrower", Type.Water, Stat.Damage, 10.0, 90.0, 50.0),
-            new Move("Fire Spin", Type.Water, Stat.Damage, 70.0, 05.0, 50.0),
-            new Move("Inferno", Type.Water, Stat.Damage, 20.0, 50.0, 50.0)
-    );
-    List<Move> squirtleMoveList = List.of(
-            new Move("Water Gun", Type.Water, Stat.Damage, 50.0, 50.0, 50.0),
-            new Move("Waterfall", Type.Water, Stat.Damage, 10.0, 90.0, 50.0),
-            new Move("Surf", Type.Water, Stat.Damage, 70.0, 05.0, 50.0),
-            new Move("Bubble", Type.Water, Stat.Damage, 20.0, 50.0, 50.0)
-    );*/
     Scanner scanner = new Scanner(System.in);
+    ParseData parseData;
     Player player1 = new Player("Player 1");
     Player player2 = new Player("Player 2");
 
@@ -63,16 +42,23 @@ public class Battle {
 
     Random random = new Random();
 
-    public void battle() {
+    public void battle() throws FileNotFoundException {
         //Print line to choose Pokemon
         System.out.println("Choose your Pokemon:");
-        System.out.println("Bulbasaur, Charmander, Squirtle");
+        //System.out.println("Bulbasaur, Charmander, Squirtle");
+        parseData = new ParseData();
 
         //Read in user input
         String input;
         input = scanner.nextLine();
-
-        createPokemon(input);
+        parseData.pokemonSetup(player1,input);
+        System.out.println("Enemy Pokemon: ");
+        parseData = new ParseData();
+        input = scanner.nextLine();
+        parseData.pokemonSetup(player2,input);
+        //createPokemon(input);
+        player1.setCurrentPokemon(player1.getPokemons().get(0));
+        player2.setCurrentPokemon(player2.getPokemons().get(0));
 
         battleBeginSummary(player1, player2);
 
@@ -136,10 +122,10 @@ public class Battle {
             if (player1.isTurn()) {
                 System.out.println("Player Turn");
                 System.out.println(
-                        player1.getCurrentPokemon().getMoveList().get(0).getName() + ", " +
-                        player1.getCurrentPokemon().getMoveList().get(1).getName() + ", " +
-                        player1.getCurrentPokemon().getMoveList().get(2).getName() + ", " +
-                        player1.getCurrentPokemon().getMoveList().get(3).getName()
+                        player1.getCurrentPokemon().getMoveList().get(0).toString() + ",\n" +
+                        player1.getCurrentPokemon().getMoveList().get(1).toString() + ",\n" +
+                        player1.getCurrentPokemon().getMoveList().get(2).toString() + ",\n" +
+                        player1.getCurrentPokemon().getMoveList().get(3).toString()
                 );
                 input = scanner.nextLine();
                 playerMove = checkMove(input);

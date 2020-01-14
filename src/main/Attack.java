@@ -87,12 +87,24 @@ public class Attack extends Move{
     @Override
     public void action(Player player1, Player player2) {
         double damage = 0.0;
+        int advantageCheck = 0;
         System.out.printf("%s used %s\n",player1.getCurrentPokemon().getName(), this.getName());
         damage = calculateDamage(player1);
+        advantageCheck = typeAdvantage(player1.getCurrentPokemon().getType(),player2.getCurrentPokemon().getType());
         if(damage == 0.0){
             System.out.printf("%s Missed!\n",player1.getCurrentPokemon().getName());
         }
         else if(damage > 0.0) {
+            switch (advantageCheck){
+                case 1:{
+                    damage *= 1.4;
+                    break;
+                }
+                case -1:{
+                    damage *= 0.5;
+                    break;
+                }
+            }
             damage = damage - player2.getCurrentPokemon().getDefense();
             damage = Math.max(damage, 0.0);
             if (damage > 0.0) {
@@ -104,5 +116,68 @@ public class Attack extends Move{
             }
         }
         player2.getCurrentPokemon().resetDefense();
+    }
+    private int typeAdvantage(Type player, Type enemy){
+        int advantage = 0;
+        switch (player){
+            case Fire:{
+                switch (enemy){
+                    case Fire:{
+                        advantage = 0;
+                        break;
+                    }
+                    case Grass:{
+                        advantage = 1;
+                        break;
+                    }
+                    case Water:{
+                        advantage = -1;
+                        break;
+                    }
+                }
+                break;
+            }
+            case Water:{
+                switch (enemy){
+                    case Water:{
+                        advantage = 0;
+                        break;
+                    }
+                    case Fire:{
+                        advantage = 1;
+                        break;
+                    }
+                    case Grass:
+                        advantage = -1;
+                        break;
+                }
+                break;
+            }
+            case Grass:{
+                switch (enemy){
+                    case Grass:{
+                        advantage = 0;
+                        break;
+                    }
+                    case Water:{
+                        advantage = 1;
+                        break;
+                    }
+                    case Fire:{
+                        advantage = -1;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return advantage;
+    }
+    @Override
+    public String toString(){
+        return "" + this.getName() + ":\n\t" + this.getType() +
+                " Attack: " + this.getValue() +
+                " Critical: " + this.getCritical() +
+                " Accuracy: " + this.getAccuracy();
     }
 }

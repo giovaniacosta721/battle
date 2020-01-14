@@ -31,4 +31,9 @@ public class Recover extends Move {
         }
         player1.getCurrentPokemon().setHealth(healing);
     }
+    @Override
+    public String toString(){
+        return "" + this.getName() + "\n\tRecover: " +
+                this.getValue();
+    }
 }
