@@ -8,7 +8,7 @@ import java.util.Random;
  * Concrete moveSet. Inherits from Move and adds critical multiplier, accuracy, and type.
  * Attack will always be of Stat.Damage.
  * */
-public class Attack extends Move{
+public class Attack extends Move {
     private double critical;
     private double accuracy;
     private Type type;
@@ -18,25 +18,6 @@ public class Attack extends Move{
         this.type = type;
         this.critical = critical;
         this.accuracy = accuracy;
-    }
-    public double getCritical() {
-        return critical;
-    }
-
-    public void setCritical(double critical) {
-        this.critical = critical;
-    }
-
-    public double getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     /**Calculates final damage based on formula base * (1 + critical + sameTypeBonus + powerLevel).
@@ -179,5 +160,24 @@ public class Attack extends Move{
                 " Attack: " + this.getValue() +
                 " Critical: " + this.getCritical() +
                 " Accuracy: " + this.getAccuracy();
+    }
+
+    public double getCritical() {
+        return critical;
+    }
+    public void setCritical(double critical) {
+        this.critical = critical;
+    }
+    public double getAccuracy() {
+        return accuracy;
+    }
+    public void setAccuracy(double accuracy) {
+        this.accuracy = accuracy;
+    }
+    public Type getType() {
+        return type;
+    }
+    public void setType(Type type) {
+        this.type = type;
     }
 }

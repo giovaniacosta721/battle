@@ -1,7 +1,7 @@
 package main.enums;
 
 /**
- * Enum to define the types that creatures or moves may be.
+ * This enumerator lists the possible types attached to a Pokemon or its move set.
  */
 
 public enum Type {
@@ -24,6 +24,5 @@ public enum Type {
     Rock,
     Steel,
     Water
-
 
 }

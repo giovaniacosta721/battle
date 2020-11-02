@@ -11,49 +11,54 @@ abstract public class Move implements Action{
     private String name;
     private Stat stat;
     private double value;
+    private Type type;
 
     public Move(String name, Stat stat, double value) {
         this.name = name;
         this.stat = stat;
         this.value = value;
     }
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public Stat getStat() {
-        return stat;
-    }
-
-    @Override
-    public void setStat(Stat stat) {
-        this.stat = stat;
-    }
-
-    @Override
-    public double getValue() {
-        return value;
-    }
-
-    @Override
-    public void setValue(double value) {
-        this.value = value;
-    }
 
     @Override
     abstract public void action(Player player1, Player player2);
+
     @Override
     public String toString(){
         return "" + this.getName() + "\nValue: " +
                 this.getValue();
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public Type getType() {
+        return type;
+    }
+    @Override
+    public void setType(Type type) {
+        this.type = type;
+    }
+    @Override
+    public double getValue() {
+        return value;
+    }
+    @Override
+    public void setValue(double value) {
+        this.value = value;
+    }
+    @Override
+    public Stat getStat() {
+        return stat;
+    }
+    @Override
+    public void setStat(Stat stat) {
+        this.stat = stat;
+    }
 
 }
